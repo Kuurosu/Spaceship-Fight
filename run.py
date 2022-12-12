@@ -46,7 +46,7 @@ class Ship:
         self.cool_down_counter = 0
 
     def draw(self, window):
-        pygame.draw.rect(window, (255,0,0), (self.x, self.y, 50, 50), 0)
+        pygame.draw.rect(window, (255, 0, 0), (self.x, self.y, 50, 50), 0)
 
 
 def main():
@@ -58,6 +58,9 @@ def main():
     level = 1
     lives = 5
     main_font = pygame.font.SysFont("Ariel", 50)
+    player_vel = 5
+
+    ship = Ship(300, 650)
 
     clock = pygame.time.Clock()
 
@@ -70,6 +73,8 @@ def main():
         WINDOW.blit(lives_label, (10, 10))
         WINDOW.blit(level_label, (WIDTH - level_label.get_width() - 10, 10))
 
+        ship.draw(WINDOW)
+
         pygame.display.update()
 
     while run:
@@ -79,6 +84,16 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:  # Left
+            ship.x -= player_vel
+        if keys[pygame.K_RIGHT]:  # Right
+            ship.x += player_vel
+        if keys[pygame.K_UP]:  # Up
+            ship.y -= player_vel
+        if keys[pygame.K_DOWN]:  # Down
+            ship.y += player_vel
 
 
 main()
