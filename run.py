@@ -32,3 +32,16 @@ YELLOW_LASER = pygame.image.load(
 # Background
 BACKGROUND = pygame.image.load(
     os.path.join("assets", "background-black.png"))
+
+def main():
+    run = True
+    FPS = 60
+    clock = pygame.time.Clock()
+
+    while run:
+        clock.tick(FPS)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            
