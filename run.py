@@ -3,6 +3,10 @@ import os
 import time
 import random
 
+WIDTH, HEIGHT = 750, 750
+WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Spaceship Fight")
+
 # Loads enemy ships
 RED_SPACE_SHIP = pygame.image.load(
     os.path.join("assets", "pixel_ship_red_small.png"))
