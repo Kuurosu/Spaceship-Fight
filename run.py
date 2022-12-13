@@ -46,7 +46,16 @@ class Ship:
         self.cool_down_counter = 0
 
     def draw(self, window):
-        pygame.draw.rect(window, (255, 0, 0), (self.x, self.y, 50, 50), 0)
+        window.blit(self.ship_img, (self.x, self.y))
+
+
+class Player(Ship):
+    def __init__(self, x, y, health=100):
+        super().__init__(x, y, health)
+        self.ship_img = YELLOW_SPACE_SHIP
+        self.laser_img = YELLOW_LASER
+        self.mask = pygame.mask.from_surface(self.ship_img)
+        self.max_health = health
 
 
 def main():
@@ -57,10 +66,10 @@ def main():
     FPS = 60
     level = 1
     lives = 5
-    main_font = pygame.font.SysFont("Ariel", 50)
+    main_font = pygame.font.SysFont("Arial", 50)
     player_vel = 5
 
-    ship = Ship(300, 650)
+    player = Player(300, 650)
 
     clock = pygame.time.Clock()
 
@@ -73,7 +82,7 @@ def main():
         WINDOW.blit(lives_label, (10, 10))
         WINDOW.blit(level_label, (WIDTH - level_label.get_width() - 10, 10))
 
-        ship.draw(WINDOW)
+        player.draw(WINDOW)
 
         pygame.display.update()
 
@@ -86,14 +95,14 @@ def main():
                 run = False
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:  # Left
-            ship.x -= player_vel
-        if keys[pygame.K_RIGHT]:  # Right
-            ship.x += player_vel
-        if keys[pygame.K_UP]:  # Up
-            ship.y -= player_vel
-        if keys[pygame.K_DOWN]:  # Down
-            ship.y += player_vel
+        if keys[pygame.K_LEFT] and player.x - player_vel > 0:  # Left
+            player.x -= player_vel
+        if keys[pygame.K_RIGHT] and player.x + player_vel + 50 < WIDTH:  # Right
+            player.x += player_vel
+        if keys[pygame.K_UP] and player.y - player_vel > 0:  # Up
+            player.y -= player_vel
+        if keys[pygame.K_DOWN] and player.y + player_vel + 50 < HEIGHT:  # Down
+            player.y += player_vel
 
 
 main()
